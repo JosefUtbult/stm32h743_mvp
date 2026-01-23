@@ -4,9 +4,13 @@
 use cortex_m::asm;
 use cortex_m_rt::entry;
 use stm32h7::stm32h743 as pac;
+use rtt_target::{rprintln, rtt_init_print};
 
 #[entry]
 fn main() -> ! {
+    rtt_init_print!();
+    rprintln!("Hello, world!");
+
     let dp = pac::Peripherals::take().unwrap();
 
     // Enable GPIOB clock (for onboard LED, PB0)

@@ -4,13 +4,12 @@ authors = ["Josef Utbult"]
 version = "0.1.0"
 edition = "2024"
 
+[profile.dev]
+opt-level = 0
+debug = true
+
 [dependencies]
 stm32h7 = { version = "0.15", features = ["stm32h743", "rt"] }
 cortex-m-rt = { version = "0.7.5" }
-
-# Enable for critical section support
-#cortex-m = { version = "0.7.0", features = ["critical-section-single-core"] }
-#critical-section = "1.2.0"
-
-# Otherwise, enable this
-cortex-m = { version = "0.7.0" }
+cortex-m = { version = "0.7.0", features = ["critical-section-single-core"] }
+rtt-target = "0.6.2"
