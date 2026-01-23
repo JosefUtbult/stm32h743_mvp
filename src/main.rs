@@ -1,0 +1,34 @@
+#![no_std]
+#![no_main]
+
+use cortex_m::asm;
+use cortex_m_rt::entry;
+use stm32h7::stm32h743 as pac;
+
+#[entry]
+fn main() -> ! {
+    let dp = pac::Peripherals::take().unwrap();
+
+    // Enable GPIOB clock (for onboard LED, PB0)
+    dp.RCC.ahb4enr.modify(|_, w| w.gpioben().set_bit());
+
+    // Set PB0 as output
+    dp.GPIOB.moder.modify(|_, w| w.moder0().output());
+
+    loop {
+        // Set PB0 high
+        dp.GPIOB.bsrr.write(|w| w.bs0().set_bit());
+        cortex_m::asm::delay(8_000_000);
+
+        // Set PB0 low
+        dp.GPIOB.bsrr.write(|w| w.br0().set_bit());
+        cortex_m::asm::delay(8_000_000);
+    }
+}
+
+#[panic_handler]
+fn panic(_info: &core::panic::PanicInfo) -> ! {
+    loop {
+        asm::bkpt();
+    }
+}
