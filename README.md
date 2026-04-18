@@ -1,22 +1,29 @@
 # STM32H743 MVP
 
 This project is an attempt at a minimal viable product for embedded rust on the
-stm32h7 platform. The goal is to:
+stm32 platform. The goal is to:
 
-- Enable raw peripheral access using the stm32h732 pac from the `stm32h7` crate
+- Enable raw peripheral access using the a pac from one of the `stm32xx` crates
 - Allow for tracing using RTT
 - Add support for GDB debugging
 
 This is in practice a hello world project that writes a hello world message and
-blinks a LED on an STM32H743 Nucleo.
+blinks a LED on various STM32 Nucleo boards.
 
 ## Components
 
 ### Hardware
 
-This guide is intended to be used with an STM32H743 Nucleo board. It contains
-the actual processor and an on-board ST-LINK V3 programmer. It is pretty much
-as plug and play as you are going to get.
+This guide is intended to be used with a Nucleo board. It contains the actual
+processor and an on-board ST-LINK V3 programmer. It is pretty much as plug and
+play as you are going to get.
+
+The supported boards are the following:
+
+- STM32H743
+- STM32F411
+
+The code for these can be found in the `platform` directory.
 
 ### Cortex-M support
 
@@ -36,10 +43,14 @@ memory regions (RAM, Flash).
 
 ### Peripheral access
 
-Peripheral access is done with the
-[`stm32h7`](https://docs.rs/stm32h7/latest/stm32h7/) crate. This gives you
-access to a peripheral object that allows you to read/write to different
-hardware registers that is unique to the STM32H743.
+Peripheral access (or `pac`) is done with target specific crates. These are:
+
+- The [`stm32h7`](https://docs.rs/stm32h7/latest/stm32h7/) crate
+- The ['stm32f4'](https://docs.rs/stm32f4/latest/stm32f4/) crate
+
+These give you access to a peripheral object that allows you to read/write to
+different hardware registers that is unique to the specific STM32 processor
+family.
 
 ### RTT Tracing
 
@@ -90,7 +101,8 @@ rustup target add thumbv7em-none-eabihf
 cargo embed debug
 ```
 
-Then, in a separate terminal, launch GDB
+Then, in a separate terminal, launch GDB and point to the generated binary.
+Note that this example uses the stm32h743 example.
 
 **Debian**
 ```bash
