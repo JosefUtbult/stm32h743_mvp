@@ -23,7 +23,7 @@ The supported boards are the following:
 - STM32H743
 - STM32F411
 
-The code for these can be found in the `platform` directory.
+The code for these can be found in the [`platform`](./platform) directory.
 
 ### Cortex-M support
 
@@ -46,7 +46,7 @@ memory regions (RAM, Flash).
 Peripheral access (or `pac`) is done with target specific crates. These are:
 
 - The [`stm32h7`](https://docs.rs/stm32h7/latest/stm32h7/) crate
-- The ['stm32f4'](https://docs.rs/stm32f4/latest/stm32f4/) crate
+- The [`stm32f4`](https://docs.rs/stm32f4/latest/stm32f4/) crate
 
 These give you access to a peripheral object that allows you to read/write to
 different hardware registers that is unique to the specific STM32 processor
